@@ -26,12 +26,20 @@ public class Players extends HttpServlet {
 
 //        System.out.println(request.getParameter("age"));
 
-        Player nplayer = new Player(request.getParameter("first_name"), request.getParameter("last_name"), Integer.parseInt(request.getParameter("age")));
-
         ArrayList<Player> cPlayers = vTeam.getPlayers();
-        System.out.println(cPlayers);
-        System.out.println(nplayer);
-        cPlayers.add(nplayer);
+
+        if (request.getParameter("action") != null) {
+            System.out.println("aware of action");
+            if(request.getParameter("action").equals("delete")) {
+                cPlayers.remove(Integer.parseInt(request.getParameter("player_id")));
+            }
+        } else {
+
+            Player nplayer = new Player(request.getParameter("first_name"), request.getParameter("last_name"), Integer.parseInt(request.getParameter("age")));
+
+            cPlayers.add(nplayer);
+        }
+
 
         response.sendRedirect("/rosters/teams?id="+ vTeamID);
 

@@ -27,7 +27,7 @@
         <c:forEach items="${cTeams}" var="team" varStatus="loop">
             <tr>
                 <td><c:out value="${team.getTeam_name()}"/></td>
-                <td><p>4</p></td>
+                <td><c:out value="${team.getPlayers().size()}"/></td>
                 <td>
                     <a href="<c:url value="/rosters/teams?id=${loop.index}"/>">Details</a>
                     <a href="<c:url value="/rosters/teams?delete=${loop.index}"/>">Delete</a>

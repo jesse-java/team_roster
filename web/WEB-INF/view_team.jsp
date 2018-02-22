@@ -14,6 +14,7 @@
 </head>
 <body>
     <h1>Team: ${vTeam.getTeam_name()}</h1>
+    <a href="<c:url value="/rosters/home"/>">Back to Home</a>
     <a href="<c:url value="/rosters/players?id=${team_id}"/>">Add Player</a>
 
     <table>
@@ -29,7 +30,14 @@
                     <td><c:out value="${player.getFirst_name()}"/></td>
                     <td><c:out value="${player.getLast_name()}"/></td>
                     <td><c:out value="${player.getAge()}"/></td>
-                    <td>Delete</td>
+                    <td>
+                        <form action="/rosters/players" method="POST">
+                            <input type="hidden" name="action" value="delete">
+                            <input type="hidden" name="team_id" value="${team_id}">
+                            <input type="hidden" name="player_id" value="${loop.index}">
+                            <input type="submit" value="Delete">
+                        </form>
+                    </td>
                 </tr>
             </c:forEach>
         </tbody>
