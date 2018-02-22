@@ -39,8 +39,11 @@ public class Teams extends HttpServlet {
 
         if (request.getParameter("id") != null) {
 
-            Team vTeam = cTeams.get(Integer.parseInt(request.getParameter("id")));
+            int vTeamID = Integer.parseInt(request.getParameter("id"));
+            Team vTeam = cTeams.get(vTeamID);
             request.setAttribute("vTeam", vTeam);
+            request.setAttribute("team_id", vTeamID);
+            request.setAttribute("vPlayers", vTeam.getPlayers());
 
             request.getRequestDispatcher("/WEB-INF/view_team.jsp").forward(request,response);
 

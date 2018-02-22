@@ -6,11 +6,35 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
     <h1>Team: ${vTeam.getTeam_name()}</h1>
+    <a href="<c:url value="/rosters/players?id=${team_id}"/>">Add Player</a>
+
+    <table>
+        <thead>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            <c:forEach items="${vPlayers}" var="player" varStatus="loop">
+                <tr>
+                    <td><c:out value="${player.getFirst_name()}"/></td>
+                    <td><c:out value="${player.getLast_name()}"/></td>
+                    <td><c:out value="${player.getAge()}"/></td>
+                    <td>Delete</td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+
+
 </body>
 </html>

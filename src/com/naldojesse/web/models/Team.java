@@ -22,6 +22,7 @@ public class Team implements java.io.Serializable {
 
     public Team(String team_name) {
         this.team_name = team_name;
+        players = new ArrayList<Player>();
 //        team_id = createID();
     }
 
