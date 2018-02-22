@@ -12,6 +12,10 @@ public class Team implements java.io.Serializable {
         players = new ArrayList<Player>();
     }
 
+    public Team(String team_name) {
+        this.team_name = team_name;
+    }
+
     public String getTeam_name() {
         return team_name;
     }
