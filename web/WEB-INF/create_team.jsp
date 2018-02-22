@@ -13,8 +13,8 @@
     <title>Title</title>
 </head>
 <body>
-
     <h1>Create a new Team</h1>
+    <div style="color: #FF0000;">${errorMessage}</div>
     <form action="/rosters/teams" method="POST">
         Team Name: <input type="text" name="team_name">
         <input type="submit" value="Create">

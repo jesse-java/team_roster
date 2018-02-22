@@ -24,24 +24,46 @@ public class Players extends HttpServlet {
         int vTeamID = Integer.parseInt(request.getParameter("team_id"));
         Team vTeam = cTeams.get(vTeamID);
 
-//        System.out.println(request.getParameter("age"));
+        //error message handling
+        ArrayList<String> error_messages = new ArrayList<>();
 
-        ArrayList<Player> cPlayers = vTeam.getPlayers();
-
-        if (request.getParameter("action") != null) {
-            System.out.println("aware of action");
-            if(request.getParameter("action").equals("delete")) {
-                cPlayers.remove(Integer.parseInt(request.getParameter("player_id")));
-            }
-        } else {
-
-            Player nplayer = new Player(request.getParameter("first_name"), request.getParameter("last_name"), Integer.parseInt(request.getParameter("age")));
-
-            cPlayers.add(nplayer);
+        if (request.getParameter("first_name").length() == 0) {
+            error_messages.add("First name must not be blank");
+        }
+        if (request.getParameter("last_name").length() == 0) {
+            error_messages.add("Last name must not be blank");
+        }
+        if (Integer.parseInt(request.getParameter("age")) < 18) {
+            error_messages.add("You must be a minimum of 18 years old to join");
         }
 
+        if (error_messages.size() != 0) {
+            request.setAttribute("error_messages", error_messages);
+            request.setAttribute("vTeam", vTeam);
+            request.setAttribute("team_id", vTeamID);
+            request.getRequestDispatcher("/WEB-INF/add_player.jsp").forward(request, response);
+        } else {
 
-        response.sendRedirect("/rosters/teams?id="+ vTeamID);
+            ArrayList<Player> cPlayers = vTeam.getPlayers();
+
+            //when user presses delete button on player
+            if (request.getParameter("action") != null) {
+                if(request.getParameter("action").equals("delete")) {
+                    cPlayers.remove(Integer.parseInt(request.getParameter("player_id")));
+                }
+            } else {
+
+                Player nplayer = new Player(request.getParameter("first_name"), request.getParameter("last_name"), Integer.parseInt(request.getParameter("age")));
+
+                cPlayers.add(nplayer);
+            }
+
+
+            response.sendRedirect("/rosters/teams?id="+ vTeamID);
+
+
+        }
+
 
     }
 

@@ -13,6 +13,9 @@
 </head>
 <body>
       <h1>Add a player to team ${vTeam.getTeam_name()}</h1>
+      <div><c:forEach items="${error_messages}" var="error">
+            <p>${error}</p>
+      </c:forEach></div>
       <form action="/rosters/players" method="POST">
           <input type="hidden" name="team_id" value="${team_id}">
           First Name: <input type="text" name="first_name">

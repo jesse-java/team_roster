@@ -18,15 +18,25 @@ public class Teams extends HttpServlet {
         HttpSession session = request.getSession();
 
         String team_name = request.getParameter("team_name");
-        System.out.println(team_name);
+        System.out.println("New Team Name: " + team_name);
 
-//        Team nTeam =  new Team(team_name);
+        if (team_name.length() == 0) {
+            request.setAttribute("errorMessage", "Team name must not be blank.");
+        } else if (team_name.length() < 2) {
+            request.setAttribute("errorMessage", "Team name must be less than 2 characters");
+        }
 
-        ArrayList<Team> cTeams = (ArrayList<Team>) session.getAttribute("sTeams");
+        if (request.getAttribute("errorMessage") != null) {
+            request.getRequestDispatcher("/WEB-INF/create_team.jsp").forward(request,response);
+        } else {
 
-        cTeams.add(new Team(team_name));
+            ArrayList<Team> cTeams = (ArrayList<Team>) session.getAttribute("sTeams");
 
-        response.sendRedirect("/rosters/home");
+            cTeams.add(new Team(team_name));
+
+            response.sendRedirect("/rosters/home");
+        }
+
 
     }
 
