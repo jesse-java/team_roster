@@ -20,19 +20,43 @@ public class Teams extends HttpServlet {
         String team_name = request.getParameter("team_name");
         System.out.println(team_name);
 
-        Team nTeam =  new Team(team_name);
+//        Team nTeam =  new Team(team_name);
 
-        ArrayList<Team> cTeams = (ArrayList<Team>) session.getAttribute("sTeam");
+        ArrayList<Team> cTeams = (ArrayList<Team>) session.getAttribute("sTeams");
 
-        cTeams.add(nTeam);
+        cTeams.add(new Team(team_name));
 
-        response.sendRedirect("/home");
+        response.sendRedirect("/rosters/home");
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        request.getRequestDispatcher("/WEB-INF/create_team.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+
+        ArrayList<Team> cTeams = (ArrayList<Team>) session.getAttribute("sTeams");
+
+
+        if (request.getParameter("id") != null) {
+
+            Team vTeam = cTeams.get(Integer.parseInt(request.getParameter("id")));
+            request.setAttribute("vTeam", vTeam);
+
+            request.getRequestDispatcher("/WEB-INF/view_team.jsp").forward(request,response);
+
+        } else if (request.getParameter("delete") != null) {
+
+            cTeams.remove(Integer.parseInt(request.getParameter("delete")));
+
+            response.sendRedirect("/rosters/home");
+
+        } else {
+
+            request.getRequestDispatcher("/WEB-INF/create_team.jsp").forward(request,response);
+        }
+
 
     }
+
+
 }

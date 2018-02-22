@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-
+    <h1>Team: ${vTeam.getTeam_name()}</h1>
 </body>
 </html>

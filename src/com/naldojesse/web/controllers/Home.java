@@ -23,12 +23,12 @@ public class Home extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        ArrayList<?> cTeams;
+        ArrayList<Team> cTeams;
 
         HttpSession session = request.getSession();
 
         if (session.getAttribute("sTeams") == null) {
-            session.setAttribute("sTeams", new ArrayList<>());
+            session.setAttribute("sTeams", new ArrayList<Team>());
         }
 
         cTeams = (ArrayList<Team>) session.getAttribute("sTeams");
